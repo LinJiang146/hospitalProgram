@@ -34,12 +34,6 @@
             <scope>provided </scope>
         </dependency>
 
-        <!--lombok用来简化实体类：需要安装lombok插件-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
         <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -48,6 +42,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
+        <!--lombok用来简化实体类：需要安装lombok插件-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <dependency>

@@ -58,7 +58,6 @@ public class Swagger2Config {
     }
 
     private ApiInfo adminApiInfo(){
-
         return new ApiInfoBuilder()
                 .title("后台管理系统-API文档")
                 .description("本文档描述了后台管理系统微服务接口定义")

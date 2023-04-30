@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/hospitalProgram.iml" filepath="$PROJECT_DIR$/hospitalProgram.iml" />
       <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service_cmn/service_cmn.iml" filepath="$PROJECT_DIR$/service/service_cmn/service_cmn.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service_hospital/service_hospital.iml" filepath="$PROJECT_DIR$/service/service_hospital/service_hospital.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service_user/service_user.iml" filepath="$PROJECT_DIR$/service/service_user/service_user.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/service_util/service_util.iml" filepath="$PROJECT_DIR$/common/service_util/service_util.iml" />

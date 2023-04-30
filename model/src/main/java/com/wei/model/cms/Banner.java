@@ -11,10 +11,10 @@ import lombok.Data;
  * <p>
  * 首页Banner实体
  * </p>
- *
- * @author qy
- * @since 2019-11-08
+ * @author Wei
+ * @date 2023/4/26
  */
+
 @Data
 @ApiModel(description = "首页Banner实体")
 @TableName("banner")

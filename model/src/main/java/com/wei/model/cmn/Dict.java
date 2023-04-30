@@ -17,8 +17,10 @@ import java.util.Map;
  * Dict
  * </p>
  *
- * @author qy
+ * @author Wei
+ * @date 2023/4/26
  */
+
 @Data
 @ApiModel(description = "数据字典")
 @TableName("dict")
