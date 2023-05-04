@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import java.lang.reflect.Method;
 import java.time.Duration;
 
@@ -32,7 +31,7 @@ public class RedisConfig {
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
             @Override
-            public Object generate(Object target, Method method, Object... params) {
+            public Object generate(Object target, Method method,Object... params) {
                 StringBuilder key = new StringBuilder();
                 key.append(target.getClass().getName());
                 key.append(method.getName());
@@ -55,7 +54,7 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
 
-//解决查询缓存转换异常的问题
+// 解决查询缓存转换异常的问题
         ObjectMapper om = new ObjectMapper();
 // 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
