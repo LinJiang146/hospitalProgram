@@ -18,7 +18,6 @@ import java.util.List;
 @Api(description = "数据字典接口")
 @RestController
 @RequestMapping("/admin/cmn/dict")
-//@CrossOrigin
 public class DictController {
 
     @Autowired
@@ -58,13 +57,19 @@ public class DictController {
     public String getName(@PathVariable String dictCode,
                           @PathVariable String value) {
         String dictName = dictService.getDictName(dictCode,value);
+
+        System.out.println("123");
         return dictName;
+
     }
 
     //根据value查询
     @GetMapping("getName/{value}")
     public String getName(@PathVariable String value) {
         String dictName = dictService.getDictName("",value);
+        System.out.println("456");
         return dictName;
     }
+
+
 }

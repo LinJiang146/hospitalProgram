@@ -10,6 +10,9 @@
     <file url="file://$PROJECT_DIR$/service/service_user/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service_client/service_cmn_client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service_client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service_gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service_hospital/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service_util/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

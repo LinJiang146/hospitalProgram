@@ -9,9 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="common_util" />
         <module name="service_hospital" />
+        <module name="service_gateway" />
+        <module name="service_user" />
         <module name="model" />
         <module name="service_util" />
-        <module name="service_user" />
+        <module name="service_cmn_client" />
         <module name="service_cmn" />
       </profile>
     </annotationProcessing>
@@ -21,7 +23,10 @@
       <module name="hospitalProgram" target="1.8" />
       <module name="model" target="8" />
       <module name="service" target="8" />
+      <module name="service_client" target="8" />
       <module name="service_cmn" target="8" />
+      <module name="service_cmn_client" target="8" />
+      <module name="service_gateway" target="8" />
       <module name="service_hospital" target="8" />
       <module name="service_user" target="8" />
       <module name="service_util" target="8" />
@@ -34,7 +39,10 @@
       <module name="hospitalProgram" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service" options="-parameters" />
+      <module name="service_client" options="-parameters" />
       <module name="service_cmn" options="-parameters" />
+      <module name="service_cmn_client" options="-parameters" />
+      <module name="service_gateway" options="-parameters" />
       <module name="service_hospital" options="-parameters" />
       <module name="service_user" options="-parameters" />
       <module name="service_util" options="-parameters" />

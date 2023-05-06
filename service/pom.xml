@@ -60,15 +60,20 @@
             <optional>true</optional>
         </dependency>
 <!--        &lt;!&ndash; 服务调用feign &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wei</groupId>
+            <artifactId>service_client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 <!--        &lt;!&ndash; 服务注册 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
 <!--        &lt;!&ndash; 流量控制 &ndash;&gt;-->
 <!--        &lt;!&ndash; <dependency>-->
 <!--             <groupId>com.alibaba.cloud</groupId>-->
