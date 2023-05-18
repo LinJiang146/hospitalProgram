@@ -12,7 +12,7 @@ import lombok.Data;
  * UserInfo
  * </p>
  *
- * @author qy
+ * @author wei
  */
 @Data
 @ApiModel(description = "UserInfo")
@@ -57,5 +57,8 @@ public class UserInfo extends BaseEntity {
 	@TableField("status")
 	private Integer status;
 
+	@ApiModelProperty(value = "邮箱")
+	@TableField("mail")
+	private String mail;
 }
 

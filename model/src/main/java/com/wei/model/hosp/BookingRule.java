@@ -14,7 +14,7 @@ import java.util.List;
  * RegisterRule
  * </p>
  *
- * @author qy
+ * @author wei
  */
 @Data
 @ApiModel(description = "预约规则")

@@ -11,6 +11,7 @@
         <module name="service_hospital" />
         <module name="service_gateway" />
         <module name="service_user" />
+        <module name="service_msm" />
         <module name="model" />
         <module name="service_util" />
         <module name="service_cmn_client" />
@@ -28,6 +29,7 @@
       <module name="service_cmn_client" target="8" />
       <module name="service_gateway" target="8" />
       <module name="service_hospital" target="8" />
+      <module name="service_msm" target="8" />
       <module name="service_user" target="8" />
       <module name="service_util" target="8" />
     </bytecodeTargetLevel>
@@ -44,6 +46,7 @@
       <module name="service_cmn_client" options="-parameters" />
       <module name="service_gateway" options="-parameters" />
       <module name="service_hospital" options="-parameters" />
+      <module name="service_msm" options="-parameters" />
       <module name="service_user" options="-parameters" />
       <module name="service_util" options="-parameters" />
     </option>

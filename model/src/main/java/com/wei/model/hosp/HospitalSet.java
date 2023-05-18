@@ -12,7 +12,7 @@ import lombok.Data;
  * HospitalSet
  * </p>
  *
- * @author qy
+ * @author wei
  */
 @Data
 @ApiModel(description = "医院设置")

@@ -1,7 +1,7 @@
 package com.wei.hospital.controller.api;
 
 
-import com.wei.common.exception.YyghException;
+import com.wei.common.exception.HospitalException;
 import com.wei.common.helper.HttpRequestHelper;
 import com.wei.common.result.Result;
 import com.wei.common.result.ResultCodeEnum;
@@ -149,7 +149,7 @@ public class ApiController {
 
         //4 判断签名是否一致
         if(!hospSign.equals(signKeyMd5)) {
-            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+            throw new HospitalException(ResultCodeEnum.SIGN_ERROR);
         }
 
         //调用service的方法
@@ -176,7 +176,7 @@ public class ApiController {
 
         //4 判断签名是否一致
         if(!hospSign.equals(signKeyMd5)) {
-            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+            throw new HospitalException(ResultCodeEnum.SIGN_ERROR);
         }
 
         //调用service方法实现根据医院编号查询
@@ -203,7 +203,7 @@ public class ApiController {
 
         //4 判断签名是否一致
         if(!hospSign.equals(signKeyMd5)) {
-            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+            throw new HospitalException(ResultCodeEnum.SIGN_ERROR);
         }
 
         //传输过程中“+”转换为了“ ”，因此我们要转换回来

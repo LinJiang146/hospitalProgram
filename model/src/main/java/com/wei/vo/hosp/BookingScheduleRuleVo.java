@@ -12,7 +12,7 @@ import java.util.Date;
  * RegisterRule
  * </p>
  *
- * @author qy
+ * @author wei
  */
 @Data
 @ApiModel(description = "可预约排班规则数据")

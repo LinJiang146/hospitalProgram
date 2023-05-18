@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wei.model.user.UserInfo;
 import com.wei.vo.user.LoginVo;
+import com.wei.vo.user.MailLoginVo;
 import com.wei.vo.user.UserAuthVo;
 import com.wei.vo.user.UserInfoQueryVo;
 
@@ -14,6 +15,9 @@ import java.util.Map;
 public interface UserInfoService extends IService<UserInfo> {
     //用户手机号登录接口
     Map<String, Object> loginUser(LoginVo loginVo);
+
+    //用户手机号登录接口
+    Map<String, Object> mailLoginUser(MailLoginVo loginVo);
 
     //根据openid判断
     UserInfo selectWxInfoOpenId(String openid);

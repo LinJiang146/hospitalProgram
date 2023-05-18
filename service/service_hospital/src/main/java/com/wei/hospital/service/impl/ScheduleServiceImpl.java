@@ -3,7 +3,7 @@ package com.wei.hospital.service.impl;
 import com.alibaba.fastjson.JSONObject;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.wei.common.exception.YyghException;
+import com.wei.common.exception.HospitalException;
 import org.joda.time.DateTime;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wei.common.result.ResultCodeEnum;
@@ -184,7 +184,7 @@ public class ScheduleServiceImpl extends
         //根据医院编号获取预约规则
         Hospital hospital = hospitalService.getByHoscode(hoscode);
         if(hospital == null) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            throw new HospitalException(ResultCodeEnum.DATA_ERROR);
         }
         BookingRule bookingRule = hospital.getBookingRule();
 
@@ -293,16 +293,16 @@ public class ScheduleServiceImpl extends
         Schedule schedule = this.getScheduleId(scheduleId);
         //Schedule schedule = baseMapper.selectById(scheduleId);
         if(schedule == null) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new HospitalException(ResultCodeEnum.PARAM_ERROR);
         }
         //获取预约规则信息
         Hospital hospital = hospitalService.getByHoscode(schedule.getHoscode());
         if(hospital == null) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new HospitalException(ResultCodeEnum.PARAM_ERROR);
         }
         BookingRule bookingRule = hospital.getBookingRule();
         if(bookingRule == null) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new HospitalException(ResultCodeEnum.PARAM_ERROR);
         }
 
         //把获取数据设置到scheduleOrderVo

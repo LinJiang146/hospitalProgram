@@ -2,7 +2,7 @@ package com.wei.hospital.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wei.common.exception.YyghException;
+import com.wei.common.exception.HospitalException;
 import com.wei.common.result.ResultCodeEnum;
 import com.wei.hospital.mapper.HospitalSetMapper;
 import com.wei.hospital.service.HospitalSetService;
@@ -29,7 +29,7 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
         wrapper.eq("hoscode",hoscode);
         HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
         if(null == hospitalSet) {
-            throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+            throw new HospitalException(ResultCodeEnum.HOSPITAL_OPEN);
         }
         SignInfoVo signInfoVo = new SignInfoVo();
         signInfoVo.setApiUrl(hospitalSet.getApiUrl());

@@ -15,7 +15,7 @@ import java.util.Date;
  * Patient
  * </p>
  *
- * @author qy
+ * @author wei
  */
 @Data
 @ApiModel(description = "Patient")

@@ -7,6 +7,7 @@ import com.wei.model.cmn.Dict;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,9 @@ public class DictController {
 
     @Autowired
     private DictService dictService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     //导入数据字典
     @PostMapping("importData")
@@ -71,5 +75,10 @@ public class DictController {
         return dictName;
     }
 
-
+    @GetMapping("test/{value}")
+    public String test(@PathVariable String value) {
+        redisTemplate.opsForValue().set(value,value);
+        Object o = redisTemplate.opsForValue().get(value);
+        return o.toString();
+    }
 }

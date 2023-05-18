@@ -5,13 +5,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wei.common.exception.YyghException;
+import com.wei.common.exception.HospitalException;
+import com.wei.common.helper.JwtHelper;
 import com.wei.common.result.ResultCodeEnum;
+import com.wei.enums.AuthStatusEnum;
+import com.wei.model.user.Patient;
 import com.wei.model.user.UserInfo;
 import com.wei.user.mapper.UserInfoMapper;
 import com.wei.user.service.PatientService;
 import com.wei.user.service.UserInfoService;
 import com.wei.vo.user.LoginVo;
+import com.wei.vo.user.MailLoginVo;
+import com.wei.vo.user.UserAuthVo;
+import com.wei.vo.user.UserInfoQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,9 +34,9 @@ public class UserInfoServiceImpl  extends
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    @Autowired
-    private PatientService patientService;
-
+//    @Autowired
+//    private PatientService patientService;
+//
     //用户手机号登录接口
     @Override
     public Map<String, Object> loginUser(LoginVo loginVo) {
@@ -40,13 +46,13 @@ public class UserInfoServiceImpl  extends
 
         //判断手机号和验证码是否为空
         if(StringUtils.isEmpty(phone) || StringUtils.isEmpty(code)) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+            throw new HospitalException(ResultCodeEnum.PARAM_ERROR);
         }
 
         //判断手机验证码和输入的验证码是否一致
         String redisCode = redisTemplate.opsForValue().get(phone);
         if(!code.equals(redisCode)) {
-            throw new YyghException(ResultCodeEnum.CODE_ERROR);
+            throw new HospitalException(ResultCodeEnum.CODE_ERROR);
         }
 
         //绑定手机号码
@@ -57,7 +63,7 @@ public class UserInfoServiceImpl  extends
                 userInfo.setPhone(loginVo.getPhone());
                 this.updateById(userInfo);
             } else {
-                throw new YyghException(ResultCodeEnum.DATA_ERROR);
+                throw new HospitalException(ResultCodeEnum.DATA_ERROR);
             }
         }
 
@@ -79,7 +85,7 @@ public class UserInfoServiceImpl  extends
 
         //校验是否被禁用
         if(userInfo.getStatus() == 0) {
-            throw new YyghException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
+            throw new HospitalException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
         }
 
         //不是第一次，直接登录
@@ -97,7 +103,77 @@ public class UserInfoServiceImpl  extends
         map.put("name",name);
 
         //jwt生成token字符串
-        String token = JwtHelper.createToken(userInfo.getId(), name);
+        String token = JwtHelper.createToken(userInfo.getId(), userInfo.getName());
+        map.put("token",token);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> mailLoginUser(MailLoginVo loginVo) {
+        //从loginVo获取输入的邮箱，和验证码
+        String mail = loginVo.getMail();
+        String code = loginVo.getCode();
+
+        //判断邮箱和验证码是否为空
+        if(StringUtils.isEmpty(mail) || StringUtils.isEmpty(code)) {
+            throw new HospitalException(ResultCodeEnum.PARAM_ERROR);
+        }
+
+        //判断邮箱验证码和输入的验证码是否一致
+        String redisCode = redisTemplate.opsForValue().get("mailCode"+mail);
+        if(!code.equals(redisCode)) {
+            throw new HospitalException(ResultCodeEnum.CODE_ERROR);
+        }
+
+        //绑定邮箱号码
+        UserInfo userInfo = null;
+        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
+            userInfo = this.selectWxInfoOpenId(loginVo.getOpenid());
+            if(null != userInfo) {
+                userInfo.setMail(loginVo.getMail());
+                this.updateById(userInfo);
+            } else {
+                throw new HospitalException(ResultCodeEnum.DATA_ERROR);
+            }
+        }
+
+        //如果userinfo为空，进行正常邮箱登录
+        if(userInfo == null) {
+            //判断是否第一次登录：根据邮箱查询数据库，如果不存在相同手机号就是第一次登录
+            QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+            wrapper.eq("mail",mail);
+            userInfo = baseMapper.selectOne(wrapper);
+            if(userInfo == null) { //第一次使用这个邮箱登录
+                //添加信息到数据库
+                userInfo = new UserInfo();
+                userInfo.setName("");
+                userInfo.setMail(mail);
+                userInfo.setStatus(1);
+                baseMapper.insert(userInfo);
+            }
+        }
+
+        //校验是否被禁用
+        if(userInfo.getStatus() == 0) {
+            throw new HospitalException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
+        }
+
+        //不是第一次，直接登录
+        //返回登录信息
+        //返回登录用户名
+        //返回token信息
+        Map<String, Object> map = new HashMap<>();
+        String name = userInfo.getName();
+        if(StringUtils.isEmpty(name)) {
+            name = userInfo.getNickName();
+        }
+        if(StringUtils.isEmpty(name)) {
+            name = userInfo.getMail();
+        }
+        map.put("name",name);
+
+        //jwt生成token字符串
+        String token = JwtHelper.createToken(userInfo.getId(), userInfo.getName());
         map.put("token",token);
         return map;
     }
@@ -180,8 +256,8 @@ public class UserInfoServiceImpl  extends
         UserInfo userInfo = this.packageUserInfo(baseMapper.selectById(userId));
         map.put("userInfo",userInfo);
         //根据userid查询就诊人信息
-        List<Patient> patientList = patientService.findAllUserId(userId);
-        map.put("patientList",patientList);
+//        List<Patient> patientList = patientService.findAllUserId(userId);
+//        map.put("patientList" , patientList);
         return map;
     }
 
@@ -198,7 +274,7 @@ public class UserInfoServiceImpl  extends
     //编号变成对应值封装
     private UserInfo packageUserInfo(UserInfo userInfo) {
         //处理认证状态编码
-        userInfo.getParam().put("authStatusString",AuthStatusEnum.getStatusNameByStatus(userInfo.getAuthStatus()));
+        userInfo.getParam().put("authStatusString", AuthStatusEnum.getStatusNameByStatus(userInfo.getAuthStatus()));
         //处理用户状态 0  1
         String statusString = userInfo.getStatus().intValue()==0 ?"锁定" : "正常";
         userInfo.getParam().put("statusString",statusString);

@@ -12,8 +12,8 @@ import lombok.Data;
  * 角色权限
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author wei
+ * @since 2022-11-08
  */
 @Data
 @ApiModel(description = "角色权限")
