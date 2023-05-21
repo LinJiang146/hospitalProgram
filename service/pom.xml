@@ -16,6 +16,9 @@
         <module>service_hospital</module>
         <module>service_cmn</module>
         <module>service_msm</module>
+        <module>serivce_oss</module>
+        <module>service_order</module>
+        <module>service_task</module>
     </modules>
 
     <properties>

@@ -16,6 +16,7 @@ import com.wei.msm.utils.ConstantPropertiesUtils;
 import com.wei.vo.msm.MsmVo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import com.aliyun.dysmsapi20170525.Client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +28,12 @@ public class MsmServiceImpl implements MsmService {
 
         try {
             // 工程代码泄露可能会导致AccessKey泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378657.html
-            com.aliyun.dysmsapi20170525.Client client = MsmServiceImpl.createClient("LTAI5tJ9ajg1dU71wLp8tF9a", "Z2oEPTM3JUSAMrcUiayYOSkgJKh11x");
+            com.aliyun.dysmsapi20170525.Client client = MsmServiceImpl.createClient(
+                    ConstantPropertiesUtils.ACCESS_KEY_ID,
+                    ConstantPropertiesUtils.SECRECT);
             com.aliyun.dysmsapi20170525.models.SendSmsRequest sendSmsRequest = new com.aliyun.dysmsapi20170525.models.SendSmsRequest()
 
-                    .setSignName("阿里云短信测试")
+                    .setSignName("校医院预约挂号网站")
                     .setTemplateCode("SMS_154950909")
                     .setPhoneNumbers(phone)
                     .setTemplateParam("{\"code\":\""+code+"\"}");
@@ -56,44 +59,68 @@ public class MsmServiceImpl implements MsmService {
     }
 
     private boolean send(String phone, Map<String,Object> param) {
-        //判断手机号是否为空
-        if(StringUtils.isEmpty(phone)) {
-            return false;
-        }
-        //整合阿里云短信服务
-        //设置相关参数
-        DefaultProfile profile = DefaultProfile.
-                getProfile(ConstantPropertiesUtils.REGION_Id,
-                        ConstantPropertiesUtils.ACCESS_KEY_ID,
-                        ConstantPropertiesUtils.SECRECT);
-        IAcsClient client = new DefaultAcsClient(profile);
-        CommonRequest request = new CommonRequest();
-        //request.setProtocol(ProtocolType.HTTPS);
-        request.setMethod(MethodType.POST);
-        request.setDomain("dysmsapi.aliyuncs.com");
-        request.setVersion("2017-05-25");
-        request.setAction("SendSms");
 
-        //手机号
-        request.putQueryParameter("PhoneNumbers", phone);
-        //签名名称
-        request.putQueryParameter("SignName", "校医院预约挂号网站");
-        //模板code
-        request.putQueryParameter("TemplateCode", "SMS_180051135");
 
-        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(param));
-
-        //调用方法进行短信发送
         try {
-            CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
-            return response.getHttpResponse().isSuccess();
-        } catch (ServerException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
-            e.printStackTrace();
+            // 工程代码泄露可能会导致AccessKey泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378657.html
+            com.aliyun.dysmsapi20170525.Client client = MsmServiceImpl.createClient(
+                    ConstantPropertiesUtils.ACCESS_KEY_ID,
+                    ConstantPropertiesUtils.SECRECT);
+            com.aliyun.dysmsapi20170525.models.SendSmsRequest sendSmsRequest = new com.aliyun.dysmsapi20170525.models.SendSmsRequest()
+                    .setSignName("校医院预约挂号网站")
+                    .setTemplateCode("SMS_154950909")
+                    .setPhoneNumbers(phone)
+                    .setTemplateParam(JSONObject.toJSONString(param));
+            com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+            com.aliyun.dysmsapi20170525.models.SendSmsResponse resp = client.sendSmsWithOptions(sendSmsRequest, runtime);
+            com.aliyun.teaconsole.Client.log(com.aliyun.teautil.Common.toJSONString(resp));
+            if (resp.statusCode==200) return true;
+            return false;
+        }catch (Exception e){
+            throw new HospitalException("发送验证码失败",201);
         }
-        return false;
+
+
+
+
+//        //判断手机号是否为空
+//        if(StringUtils.isEmpty(phone)) {
+//            return false;
+//        }
+//        //整合阿里云短信服务
+//        //设置相关参数
+//        DefaultProfile profile = DefaultProfile.
+//                getProfile(ConstantPropertiesUtils.REGION_Id,
+//                        ConstantPropertiesUtils.ACCESS_KEY_ID,
+//                        ConstantPropertiesUtils.SECRECT);
+//        IAcsClient client = new DefaultAcsClient(profile);
+//        CommonRequest request = new CommonRequest();
+//        //request.setProtocol(ProtocolType.HTTPS);
+//        request.setMethod(MethodType.POST);
+//        request.setDomain("dysmsapi.aliyuncs.com");
+//        request.setVersion("2017-05-25");
+//        request.setAction("SendSms");
+//
+//        //手机号
+//        request.putQueryParameter("PhoneNumbers", phone);
+//        //签名名称
+//        request.putQueryParameter("SignName", "校医院预约挂号网站");
+//        //模板code
+//        request.putQueryParameter("TemplateCode", "SMS_180051135");
+//
+//        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(param));
+//
+//        //调用方法进行短信发送
+//        try {
+//            CommonResponse response = client.getCommonResponse(request);
+//            System.out.println(response.getData());
+//            return response.getHttpResponse().isSuccess();
+//        } catch (ServerException e) {
+//            e.printStackTrace();
+//        } catch (ClientException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
     }
 
     /**
@@ -103,7 +130,7 @@ public class MsmServiceImpl implements MsmService {
      * @return Client
      * @throws Exception
      */
-    public static com.aliyun.dysmsapi20170525.Client createClient(String accessKeyId, String accessKeySecret) throws Exception {
+    public static Client createClient(String accessKeyId, String accessKeySecret) throws Exception {
         com.aliyun.teaopenapi.models.Config config = new com.aliyun.teaopenapi.models.Config()
                 // 必填，您的 AccessKey ID
                 .setAccessKeyId(accessKeyId)
@@ -111,7 +138,7 @@ public class MsmServiceImpl implements MsmService {
                 .setAccessKeySecret(accessKeySecret);
         // 访问的域名
         config.endpoint = "dysmsapi.aliyuncs.com";
-        return new com.aliyun.dysmsapi20170525.Client(config);
+        return new Client(config);
     }
 
     /**
@@ -122,7 +149,7 @@ public class MsmServiceImpl implements MsmService {
      * @return Client
      * @throws Exception
      */
-    public static com.aliyun.dysmsapi20170525.Client createClientWithSTS(String accessKeyId, String accessKeySecret, String securityToken) throws Exception {
+    public static Client createClientWithSTS(String accessKeyId, String accessKeySecret, String securityToken) throws Exception {
         com.aliyun.teaopenapi.models.Config config = new com.aliyun.teaopenapi.models.Config()
                 // 必填，您的 AccessKey ID
                 .setAccessKeyId(accessKeyId)
@@ -134,6 +161,6 @@ public class MsmServiceImpl implements MsmService {
                 .setType("sts");
         // 访问的域名
         config.endpoint = "dysmsapi.aliyuncs.com";
-        return new com.aliyun.dysmsapi20170525.Client(config);
+        return new Client(config);
     }
 }

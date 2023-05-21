@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.wei.common","com.wei.user"})
-@EnableFeignClients(basePackages = {})
+@EnableFeignClients(basePackages = {"com.wei.client"})
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class);

@@ -80,6 +80,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
     //根据dictcode和value查询
     @Override
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
     public String getDictName(String dictCode, String value) {
         //如果dictCode为空，直接根据value查询
         if(StringUtils.isEmpty(dictCode)) {

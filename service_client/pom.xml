@@ -12,6 +12,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>service_cmn_client</module>
+        <module>service_order_client</module>
+        <module>service_user_client</module>
+        <module>service_hospital_client</module>
     </modules>
     <artifactId>service_client</artifactId>
 

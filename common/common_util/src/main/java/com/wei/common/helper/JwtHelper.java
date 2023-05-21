@@ -11,7 +11,6 @@ public class JwtHelper {
     private static long tokenExpiration = 24*60*60*1000;
     //签名秘钥
     private static String tokenSignKey = "123456";
-
     //根据参数生成token
     public static String createToken(Long userId, String userName) {
         String token = Jwts.builder()
@@ -42,13 +41,6 @@ public class JwtHelper {
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
         return (String)claims.get("userName");
-    }
-
-    public static void main(String[] args) {
-        String token = JwtHelper.createToken(1L, "lucy");
-        System.out.println(token);
-        System.out.println(JwtHelper.getUserId(token));
-        System.out.println(JwtHelper.getUserName(token));
     }
 }
 

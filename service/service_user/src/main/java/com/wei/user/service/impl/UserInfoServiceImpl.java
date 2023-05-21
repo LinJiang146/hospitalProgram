@@ -34,9 +34,9 @@ public class UserInfoServiceImpl  extends
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-//    @Autowired
-//    private PatientService patientService;
-//
+    @Autowired
+    private PatientService patientService;
+
     //用户手机号登录接口
     @Override
     public Map<String, Object> loginUser(LoginVo loginVo) {
@@ -256,8 +256,8 @@ public class UserInfoServiceImpl  extends
         UserInfo userInfo = this.packageUserInfo(baseMapper.selectById(userId));
         map.put("userInfo",userInfo);
         //根据userid查询就诊人信息
-//        List<Patient> patientList = patientService.findAllUserId(userId);
-//        map.put("patientList" , patientList);
+        List<Patient> patientList = patientService.findAllUserId(userId);
+        map.put("patientList" , patientList);
         return map;
     }
 

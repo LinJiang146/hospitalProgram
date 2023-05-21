@@ -61,8 +61,6 @@ public class DictController {
     public String getName(@PathVariable String dictCode,
                           @PathVariable String value) {
         String dictName = dictService.getDictName(dictCode,value);
-
-        System.out.println("123");
         return dictName;
 
     }
@@ -71,14 +69,9 @@ public class DictController {
     @GetMapping("getName/{value}")
     public String getName(@PathVariable String value) {
         String dictName = dictService.getDictName("",value);
-        System.out.println("456");
+
         return dictName;
     }
 
-    @GetMapping("test/{value}")
-    public String test(@PathVariable String value) {
-        redisTemplate.opsForValue().set(value,value);
-        Object o = redisTemplate.opsForValue().get(value);
-        return o.toString();
-    }
+
 }
