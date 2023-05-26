@@ -11,6 +11,10 @@ import com.wei.order.service.OrderService;
 import com.wei.vo.order.OrderCountQueryVo;
 import com.wei.vo.order.OrderQueryVo;
 import io.swagger.annotations.ApiOperation;
+import org.redisson.api.RCountDownLatch;
+import org.redisson.api.RLock;
+import org.redisson.api.RSemaphore;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +41,19 @@ public class OrderApiController {
     public Result getOrders(@PathVariable String orderId) {
         OrderInfo orderInfo = orderService.getOrder(orderId);
         return Result.ok(orderInfo);
+    }
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @GetMapping("text")
+    public Result text() throws InterruptedException {
+        RCountDownLatch countDownLatch = redissonClient.getCountDownLatch("countDownLatch");
+        countDownLatch.countDown();
+        countDownLatch.await();
+        System.out.println("123");
+
+        return null;
     }
 
     //订单列表（条件查询带分页）

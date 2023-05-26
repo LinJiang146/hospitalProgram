@@ -16,6 +16,8 @@ import com.wei.order.service.OrderService;
 import com.wei.order.service.PaymentService;
 import com.wei.vo.order.SignInfoVo;
 import org.joda.time.DateTime;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,16 @@ public class PaymentServiceImpl extends
     @Autowired
     private HospitalFeignClient hospitalFeignClient;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
     //向支付记录表添加信息
     @Override
     public void savePaymentInfo(OrderInfo order, Integer paymentType) {
+
+        RLock lock = redissonClient.getLock("savePayment:" + order.getId());
+        lock.lock();
+
         //根据订单id和支付类型，查询支付记录表是否存在相同订单
         QueryWrapper<PaymentInfo> wrapper = new QueryWrapper<>();
         wrapper.eq("order_id",order.getId());
@@ -55,6 +64,9 @@ public class PaymentServiceImpl extends
         paymentInfo.setSubject(subject);
         paymentInfo.setTotalAmount(order.getAmount());
         baseMapper.insert(paymentInfo);
+
+        lock.unlock();
+
     }
 
     //更新订单状态

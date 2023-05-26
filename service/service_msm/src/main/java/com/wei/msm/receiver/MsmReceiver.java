@@ -23,7 +23,7 @@ public class MsmReceiver {
     private MsmServiceImpl msmService;
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue( value = RabbitMQConst.QUEUE_MSM_ITEM,durable = "true"),
+            value = @Queue(value = RabbitMQConst.QUEUE_MSM_ITEM,durable = "true"),
             exchange = @Exchange(value = RabbitMQConst.EXCHANGE_DIRECT_MSM),
             key = {RabbitMQConst.ROUTING_MSM_ITEM}
     ))

@@ -24,7 +24,5 @@ public class RabbitMQConst {
     public static final String ROUTING_TASK_8 = "task.8";
     //队列
     public static final String QUEUE_TASK_8 = "queue.task.8";
-
-
 }
 

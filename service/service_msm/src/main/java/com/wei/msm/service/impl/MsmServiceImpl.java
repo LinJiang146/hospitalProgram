@@ -16,7 +16,7 @@ import com.wei.msm.utils.ConstantPropertiesUtils;
 import com.wei.vo.msm.MsmVo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import com.aliyun.dysmsapi20170525.Client;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,6 @@ public class MsmServiceImpl implements MsmService {
         }catch (Exception e){
             throw new HospitalException("发送验证码失败",201);
         }
-
     }
 
     //mq发送短信封装
@@ -130,7 +129,7 @@ public class MsmServiceImpl implements MsmService {
      * @return Client
      * @throws Exception
      */
-    public static Client createClient(String accessKeyId, String accessKeySecret) throws Exception {
+    public static com.aliyun.dysmsapi20170525.Client createClient(String accessKeyId, String accessKeySecret) throws Exception {
         com.aliyun.teaopenapi.models.Config config = new com.aliyun.teaopenapi.models.Config()
                 // 必填，您的 AccessKey ID
                 .setAccessKeyId(accessKeyId)
@@ -138,7 +137,7 @@ public class MsmServiceImpl implements MsmService {
                 .setAccessKeySecret(accessKeySecret);
         // 访问的域名
         config.endpoint = "dysmsapi.aliyuncs.com";
-        return new Client(config);
+        return new com.aliyun.dysmsapi20170525.Client(config);
     }
 
     /**
@@ -149,7 +148,7 @@ public class MsmServiceImpl implements MsmService {
      * @return Client
      * @throws Exception
      */
-    public static Client createClientWithSTS(String accessKeyId, String accessKeySecret, String securityToken) throws Exception {
+    public static com.aliyun.dysmsapi20170525.Client createClientWithSTS(String accessKeyId, String accessKeySecret, String securityToken) throws Exception {
         com.aliyun.teaopenapi.models.Config config = new com.aliyun.teaopenapi.models.Config()
                 // 必填，您的 AccessKey ID
                 .setAccessKeyId(accessKeyId)
@@ -161,6 +160,6 @@ public class MsmServiceImpl implements MsmService {
                 .setType("sts");
         // 访问的域名
         config.endpoint = "dysmsapi.aliyuncs.com";
-        return new Client(config);
+        return new com.aliyun.dysmsapi20170525.Client(config);
     }
 }

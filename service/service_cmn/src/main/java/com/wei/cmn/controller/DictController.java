@@ -30,6 +30,8 @@ public class DictController {
     //导入数据字典
     @PostMapping("importData")
     public Result importDict(MultipartFile file) {
+
+
         dictService.importDictData(file);
         return Result.ok();
     }

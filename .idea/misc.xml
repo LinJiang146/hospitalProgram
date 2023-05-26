@@ -4,6 +4,9 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/service_client/service_hospital_client/pom.xml" />
+        <option value="$PROJECT_DIR$/service_client/service_order_client/pom.xml" />
+        <option value="$PROJECT_DIR$/service_client/service_user_client/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
